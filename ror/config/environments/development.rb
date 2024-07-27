@@ -62,4 +62,15 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Redefine the Rails Log file
+  log_directory = File.expand_path("~/rails/logging");
+  log_file = File.join(log_directory, "development.log")
+  FileUtils.mkdir_p(log_directory) unless File.directory?(log_directory)
+  config.logger = Logger.new(log_file)
+
+  # Redefine the Rails PID file
+  pid_directory = File.expand_path("~/rails/pids")
+  FileUtils.mkdir_p(pid_directory) unless File.directory?(pid_directory)
+  config.pidfile = File.join(pid_directory, "server.pid")
 end
