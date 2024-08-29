@@ -16,7 +16,11 @@ jobs:
       run:
         shell: msys2 {0}
     steps:
-
+    - uses: actions/cache@v4
+      id: cache-win
+      with:
+        path: D:/a/_temp/msys64/home/runneradmin/.tebako
+        key: windows-latest
     - name: install ${{runner.os}} deps
       uses: msys2/setup-msys2@v2
       with:
@@ -76,7 +80,9 @@ jobs:
       run: ls -la
 
     - name: Start packaged Sinatra application
-      run: ./sample.tebako mock-service -p 4567 &
+      run: |
+        ./sample.tebako.exe mock-service -p 4567 &
+        echo "PID=$PID" >> $GITHUB_ENV
 
     - name: Wait for Sinatra to start
       run: sleep 10
@@ -85,4 +91,4 @@ jobs:
       run: curl http://localhost:4567
 
     - name: End Sinatra application
-      run: pkill -f sample.tebako
+      run: kill -9 $PID
