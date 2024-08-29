@@ -1,6 +1,17 @@
 source "https://rubygems.org"
 
-gem "sinatra"
-gem "puma"
-gem "httparty"
-gem "rackup", "~> 2.1"
+# pact-ruby-standalone
+gem "pact"
+gem "pact_broker-client"
+gem "pact-mock_service"
+gem "pact-provider-verifier"
+
+# # pact_broker
+# gem "nokogiri"
+# gem "mysql2"
+# gem "pact_broker"
+# gem "pg"
+# gem "puma"
+# gem "sequel"
+# gem "sqlite3"
+# gem "thin"
