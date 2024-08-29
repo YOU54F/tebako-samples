@@ -34,7 +34,7 @@ jobs:
       run: ls -la
 
     - name: Start packaged Sinatra application
-      run: ./sinatra.teb -p 4567 &
+      run: ./sinatra.teb mock-service -p 4567 &
 
     - name: Wait for Sinatra to start
       run: sleep 10
