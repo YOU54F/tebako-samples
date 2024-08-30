@@ -69,13 +69,17 @@ jobs:
     - name: Start packaged Sinatra application
       run: |
         nohup ./sample.tebako.exe mock-service -p 4567 &
-        echo "PID=$PID" >> $GITHUB_ENV
+        echo "PID=$!" >> $GITHUB_ENV
+        echo $PID
+        sleep 10
+        curl http://localhost:4567
+        kill -9 $PID
 
-    - name: Wait for Sinatra to start
-      run: sleep 15
+    # - name: Wait for Sinatra to start
+    #   run: sleep 5
 
-    - name: Place GET request
-      run: curl http://localhost:4567
+    # - name: Place GET request
+    #   run: curl http://localhost:4567
 
-    - name: End Sinatra application
-      run: kill -9 $PID
+    # - name: End Sinatra application
+    #   run: kill -9 $PID
