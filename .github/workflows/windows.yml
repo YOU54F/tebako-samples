@@ -53,19 +53,6 @@ jobs:
           libxslt:p
           postgresql:p
           libmariadbclient:p
-    - name: set env vars
-      run: |
-        echo "CC=${{ 'gcc' }}" >> $GITHUB_ENV
-        echo "CXX=${{ 'g++' }}" >> $GITHUB_ENV
-        echo "MSYSTEM=UCRT64" >> $GITHUB_ENV
-
-    - name: Install pacman packages
-      run: |
-        pacman -Syu --needed --noconfirm git tar bison flex pactoys
-        pacboy sync --needed --noconfirm cmake:p boost:p diffutils:p  \
-          libevent:p double-conversion:p fmt:p glog:p dlfcn:p ninja:p \
-          gtest:p autotools:p ncurses:p ruby:p toolchain:p openssl:p  \
-          make:p libyaml:p libxslt:p
 
     - name: Install gem
       run: gem install tebako
@@ -81,16 +68,14 @@ jobs:
 
     - name: Start packaged Sinatra application
       run: |
-        ./sample.tebako.exe mock-service -p 4567
-        
-      # &
-      # echo "PID=$PID" >> $GITHUB_ENV
+        ./sample.tebako.exe mock-service -p 4567 &
+        echo "PID=$PID" >> $GITHUB_ENV
 
-    # - name: Wait for Sinatra to start
-    #   run: sleep 10
+    - name: Wait for Sinatra to start
+      run: sleep 15
 
-    # - name: Place GET request
-    #   run: curl http://localhost:4567
+    - name: Place GET request
+      run: curl http://localhost:4567
 
-    # - name: End Sinatra application
-    #   run: kill -9 $PID
+    - name: End Sinatra application
+      run: kill -9 $PID
