@@ -68,7 +68,7 @@ jobs:
 
     - name: Start packaged Sinatra application
       run: |
-        nohup ./sample.tebako.exe mock-service -p 4567 &
+        ./sample.tebako.exe mock-service -p 4567 &
         echo "PID=$!" >> $GITHUB_ENV
         echo $PID
         sleep 10
